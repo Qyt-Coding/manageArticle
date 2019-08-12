@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qyt.manageArticle.mapper.LeaveWordsMapper" >
+  <resultMap id="BaseResultMap" type="qyt.manageArticle.pojo.LeaveWords" >
+    <id column="c_id" property="cId" jdbcType="INTEGER" />
+    <result column="c_name" property="cName" jdbcType="VARCHAR" />
+    <result column="c_date" property="cDate" jdbcType="VARCHAR" />
+    <result column="c_content" property="cContent" jdbcType="VARCHAR" />
+    <result column="c_for_name" property="cForName" jdbcType="VARCHAR" />
+    <result column="c_for_article_id" property="cForArticleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    c_id, c_name, c_date, c_content, c_for_name, c_for_article_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qyt.manageArticle.pojo.LeaveWordsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leave_words
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from leave_words
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leave_words
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="qyt.manageArticle.pojo.LeaveWordsExample" >
+    delete from leave_words
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qyt.manageArticle.pojo.LeaveWords" >
+    insert into leave_words (c_id, c_name, c_date, 
+      c_content, c_for_name, c_for_article_id
+      )
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cDate,jdbcType=VARCHAR}, 
+      #{cContent,jdbcType=VARCHAR}, #{cForName,jdbcType=VARCHAR}, #{cForArticleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="qyt.manageArticle.pojo.LeaveWords" >
+    insert into leave_words
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        c_id,
+      </if>
+      <if test="cName != null" >
+        c_name,
+      </if>
+      <if test="cDate != null" >
+        c_date,
+      </if>
+      <if test="cContent != null" >
+        c_content,
+      </if>
+      <if test="cForName != null" >
+        c_for_name,
+      </if>
+      <if test="cForArticleId != null" >
+        c_for_article_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cId != null" >
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null" >
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cDate != null" >
+        #{cDate,jdbcType=VARCHAR},
+      </if>
+      <if test="cContent != null" >
+        #{cContent,jdbcType=VARCHAR},
+      </if>
+      <if test="cForName != null" >
+        #{cForName,jdbcType=VARCHAR},
+      </if>
+      <if test="cForArticleId != null" >
+        #{cForArticleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qyt.manageArticle.pojo.LeaveWordsExample" resultType="java.lang.Integer" >
+    select count(*) from leave_words
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update leave_words
+    <set >
+      <if test="record.cId != null" >
+        c_id = #{record.cId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cName != null" >
+        c_name = #{record.cName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cDate != null" >
+        c_date = #{record.cDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cContent != null" >
+        c_content = #{record.cContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cForName != null" >
+        c_for_name = #{record.cForName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cForArticleId != null" >
+        c_for_article_id = #{record.cForArticleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update leave_words
+    set c_id = #{record.cId,jdbcType=INTEGER},
+      c_name = #{record.cName,jdbcType=VARCHAR},
+      c_date = #{record.cDate,jdbcType=VARCHAR},
+      c_content = #{record.cContent,jdbcType=VARCHAR},
+      c_for_name = #{record.cForName,jdbcType=VARCHAR},
+      c_for_article_id = #{record.cForArticleId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qyt.manageArticle.pojo.LeaveWords" >
+    update leave_words
+    <set >
+      <if test="cName != null" >
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cDate != null" >
+        c_date = #{cDate,jdbcType=VARCHAR},
+      </if>
+      <if test="cContent != null" >
+        c_content = #{cContent,jdbcType=VARCHAR},
+      </if>
+      <if test="cForName != null" >
+        c_for_name = #{cForName,jdbcType=VARCHAR},
+      </if>
+      <if test="cForArticleId != null" >
+        c_for_article_id = #{cForArticleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qyt.manageArticle.pojo.LeaveWords" >
+    update leave_words
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_date = #{cDate,jdbcType=VARCHAR},
+      c_content = #{cContent,jdbcType=VARCHAR},
+      c_for_name = #{cForName,jdbcType=VARCHAR},
+      c_for_article_id = #{cForArticleId,jdbcType=VARCHAR}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+</mapper>

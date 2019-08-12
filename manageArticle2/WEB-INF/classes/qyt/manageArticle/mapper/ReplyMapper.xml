@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qyt.manageArticle.mapper.ReplyMapper" >
+  <resultMap id="BaseResultMap" type="qyt.manageArticle.pojo.Reply" >
+    <id column="d_id" property="dId" jdbcType="INTEGER" />
+    <result column="d_name" property="dName" jdbcType="VARCHAR" />
+    <result column="d_date" property="dDate" jdbcType="VARCHAR" />
+    <result column="d_content" property="dContent" jdbcType="VARCHAR" />
+    <result column="d_for_name" property="dForName" jdbcType="VARCHAR" />
+    <result column="d_for_words" property="dForWords" jdbcType="VARCHAR" />
+    <result column="d_for_reply" property="dForReply" jdbcType="VARCHAR" />
+    <result column="d_for_article_id" property="dForArticleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    d_id, d_name, d_date, d_content, d_for_name, d_for_words, d_for_reply, d_for_article_id
+  </sql>
+  <!-- 新添加的  selectArticleIdAndLeaveWordId -->
+  <select id="selectArticleIdAndLeaveWordId" resultType="qyt.manageArticle.pojo.Reply" parameterType="String" >
+  	select * from reply WHERE   d_for_reply=#{0}
+  	  and d_for_article_id=#{1}
+  </select>
+  
+  
+  <!--  -->
+  
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qyt.manageArticle.pojo.ReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from reply
+    where d_id = #{dId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reply
+    where d_id = #{dId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="qyt.manageArticle.pojo.ReplyExample" >
+    delete from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qyt.manageArticle.pojo.Reply" >
+    insert into reply (d_id, d_name, d_date, 
+      d_content, d_for_name, d_for_words, 
+      d_for_reply, d_for_article_id)
+    values (#{dId,jdbcType=INTEGER}, #{dName,jdbcType=VARCHAR}, #{dDate,jdbcType=VARCHAR}, 
+      #{dContent,jdbcType=VARCHAR}, #{dForName,jdbcType=VARCHAR}, #{dForWords,jdbcType=VARCHAR}, 
+      #{dForReply,jdbcType=VARCHAR}, #{dForArticleId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qyt.manageArticle.pojo.Reply" >
+    insert into reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        d_id,
+      </if>
+      <if test="dName != null" >
+        d_name,
+      </if>
+      <if test="dDate != null" >
+        d_date,
+      </if>
+      <if test="dContent != null" >
+        d_content,
+      </if>
+      <if test="dForName != null" >
+        d_for_name,
+      </if>
+      <if test="dForWords != null" >
+        d_for_words,
+      </if>
+      <if test="dForReply != null" >
+        d_for_reply,
+      </if>
+      <if test="dForArticleId != null" >
+        d_for_article_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dId != null" >
+        #{dId,jdbcType=INTEGER},
+      </if>
+      <if test="dName != null" >
+        #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dDate != null" >
+        #{dDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dContent != null" >
+        #{dContent,jdbcType=VARCHAR},
+      </if>
+      <if test="dForName != null" >
+        #{dForName,jdbcType=VARCHAR},
+      </if>
+      <if test="dForWords != null" >
+        #{dForWords,jdbcType=VARCHAR},
+      </if>
+      <if test="dForReply != null" >
+        #{dForReply,jdbcType=VARCHAR},
+      </if>
+      <if test="dForArticleId != null" >
+        #{dForArticleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qyt.manageArticle.pojo.ReplyExample" resultType="java.lang.Integer" >
+    select count(*) from reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update reply
+    <set >
+      <if test="record.dId != null" >
+        d_id = #{record.dId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dName != null" >
+        d_name = #{record.dName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dDate != null" >
+        d_date = #{record.dDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dContent != null" >
+        d_content = #{record.dContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dForName != null" >
+        d_for_name = #{record.dForName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dForWords != null" >
+        d_for_words = #{record.dForWords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dForReply != null" >
+        d_for_reply = #{record.dForReply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dForArticleId != null" >
+        d_for_article_id = #{record.dForArticleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update reply
+    set d_id = #{record.dId,jdbcType=INTEGER},
+      d_name = #{record.dName,jdbcType=VARCHAR},
+      d_date = #{record.dDate,jdbcType=VARCHAR},
+      d_content = #{record.dContent,jdbcType=VARCHAR},
+      d_for_name = #{record.dForName,jdbcType=VARCHAR},
+      d_for_words = #{record.dForWords,jdbcType=VARCHAR},
+      d_for_reply = #{record.dForReply,jdbcType=VARCHAR},
+      d_for_article_id = #{record.dForArticleId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qyt.manageArticle.pojo.Reply" >
+    update reply
+    <set >
+      <if test="dName != null" >
+        d_name = #{dName,jdbcType=VARCHAR},
+      </if>
+      <if test="dDate != null" >
+        d_date = #{dDate,jdbcType=VARCHAR},
+      </if>
+      <if test="dContent != null" >
+        d_content = #{dContent,jdbcType=VARCHAR},
+      </if>
+      <if test="dForName != null" >
+        d_for_name = #{dForName,jdbcType=VARCHAR},
+      </if>
+      <if test="dForWords != null" >
+        d_for_words = #{dForWords,jdbcType=VARCHAR},
+      </if>
+      <if test="dForReply != null" >
+        d_for_reply = #{dForReply,jdbcType=VARCHAR},
+      </if>
+      <if test="dForArticleId != null" >
+        d_for_article_id = #{dForArticleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qyt.manageArticle.pojo.Reply" >
+    update reply
+    set d_name = #{dName,jdbcType=VARCHAR},
+      d_date = #{dDate,jdbcType=VARCHAR},
+      d_content = #{dContent,jdbcType=VARCHAR},
+      d_for_name = #{dForName,jdbcType=VARCHAR},
+      d_for_words = #{dForWords,jdbcType=VARCHAR},
+      d_for_reply = #{dForReply,jdbcType=VARCHAR},
+      d_for_article_id = #{dForArticleId,jdbcType=VARCHAR}
+    where d_id = #{dId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

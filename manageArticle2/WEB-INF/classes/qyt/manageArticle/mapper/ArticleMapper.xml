@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qyt.manageArticle.mapper.ArticleMapper" >
+  <resultMap id="BaseResultMap" type="qyt.manageArticle.pojo.Article" >
+    <id column="b_id" property="bId" jdbcType="INTEGER" />
+    <result column="b_author" property="bAuthor" jdbcType="VARCHAR" />
+    <result column="b_summary" property="bSummary" jdbcType="VARCHAR" />
+    <result column="b_date" property="bDate" jdbcType="VARCHAR" />
+    <result column="b_verify" property="bVerify" jdbcType="INTEGER" />
+    <result column="b_publish" property="bPublish" jdbcType="INTEGER" />
+    <result column="b_status" property="bStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="qyt.manageArticle.pojo.Article" extends="BaseResultMap" >
+    <result column="b_content" property="bContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    b_id, b_author, b_summary, b_date, b_verify, b_publish, b_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    b_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="qyt.manageArticle.pojo.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qyt.manageArticle.pojo.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where b_id = #{bId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from article
+    where b_id = #{bId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="qyt.manageArticle.pojo.ArticleExample" >
+    delete from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qyt.manageArticle.pojo.Article" >
+    insert into article (b_id, b_author, b_summary, 
+      b_date, b_verify, b_publish, 
+      b_status, b_content)
+    values (#{bId,jdbcType=INTEGER}, #{bAuthor,jdbcType=VARCHAR}, #{bSummary,jdbcType=VARCHAR}, 
+      #{bDate,jdbcType=VARCHAR}, #{bVerify,jdbcType=INTEGER}, #{bPublish,jdbcType=INTEGER}, 
+      #{bStatus,jdbcType=INTEGER}, #{bContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qyt.manageArticle.pojo.Article" >
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bId != null" >
+        b_id,
+      </if>
+      <if test="bAuthor != null" >
+        b_author,
+      </if>
+      <if test="bSummary != null" >
+        b_summary,
+      </if>
+      <if test="bDate != null" >
+        b_date,
+      </if>
+      <if test="bVerify != null" >
+        b_verify,
+      </if>
+      <if test="bPublish != null" >
+        b_publish,
+      </if>
+      <if test="bStatus != null" >
+        b_status,
+      </if>
+      <if test="bContent != null" >
+        b_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bId != null" >
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="bAuthor != null" >
+        #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bSummary != null" >
+        #{bSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="bDate != null" >
+        #{bDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bVerify != null" >
+        #{bVerify,jdbcType=INTEGER},
+      </if>
+      <if test="bPublish != null" >
+        #{bPublish,jdbcType=INTEGER},
+      </if>
+      <if test="bStatus != null" >
+        #{bStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bContent != null" >
+        #{bContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qyt.manageArticle.pojo.ArticleExample" resultType="java.lang.Integer" >
+    select count(*) from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update article
+    <set >
+      <if test="record.bId != null" >
+        b_id = #{record.bId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bAuthor != null" >
+        b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bSummary != null" >
+        b_summary = #{record.bSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bDate != null" >
+        b_date = #{record.bDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bVerify != null" >
+        b_verify = #{record.bVerify,jdbcType=INTEGER},
+      </if>
+      <if test="record.bPublish != null" >
+        b_publish = #{record.bPublish,jdbcType=INTEGER},
+      </if>
+      <if test="record.bStatus != null" >
+        b_status = #{record.bStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bContent != null" >
+        b_content = #{record.bContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update article
+    set b_id = #{record.bId,jdbcType=INTEGER},
+      b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      b_summary = #{record.bSummary,jdbcType=VARCHAR},
+      b_date = #{record.bDate,jdbcType=VARCHAR},
+      b_verify = #{record.bVerify,jdbcType=INTEGER},
+      b_publish = #{record.bPublish,jdbcType=INTEGER},
+      b_status = #{record.bStatus,jdbcType=INTEGER},
+      b_content = #{record.bContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update article
+    set b_id = #{record.bId,jdbcType=INTEGER},
+      b_author = #{record.bAuthor,jdbcType=VARCHAR},
+      b_summary = #{record.bSummary,jdbcType=VARCHAR},
+      b_date = #{record.bDate,jdbcType=VARCHAR},
+      b_verify = #{record.bVerify,jdbcType=INTEGER},
+      b_publish = #{record.bPublish,jdbcType=INTEGER},
+      b_status = #{record.bStatus,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qyt.manageArticle.pojo.Article" >
+    update article
+    <set >
+      <if test="bAuthor != null" >
+        b_author = #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bSummary != null" >
+        b_summary = #{bSummary,jdbcType=VARCHAR},
+      </if>
+      <if test="bDate != null" >
+        b_date = #{bDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bVerify != null" >
+        b_verify = #{bVerify,jdbcType=INTEGER},
+      </if>
+      <if test="bPublish != null" >
+        b_publish = #{bPublish,jdbcType=INTEGER},
+      </if>
+      <if test="bStatus != null" >
+        b_status = #{bStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bContent != null" >
+        b_content = #{bContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="qyt.manageArticle.pojo.Article" >
+    update article
+    set b_author = #{bAuthor,jdbcType=VARCHAR},
+      b_summary = #{bSummary,jdbcType=VARCHAR},
+      b_date = #{bDate,jdbcType=VARCHAR},
+      b_verify = #{bVerify,jdbcType=INTEGER},
+      b_publish = #{bPublish,jdbcType=INTEGER},
+      b_status = #{bStatus,jdbcType=INTEGER},
+      b_content = #{bContent,jdbcType=LONGVARCHAR}
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qyt.manageArticle.pojo.Article" >
+    update article
+    set b_author = #{bAuthor,jdbcType=VARCHAR},
+      b_summary = #{bSummary,jdbcType=VARCHAR},
+      b_date = #{bDate,jdbcType=VARCHAR},
+      b_verify = #{bVerify,jdbcType=INTEGER},
+      b_publish = #{bPublish,jdbcType=INTEGER},
+      b_status = #{bStatus,jdbcType=INTEGER}
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+</mapper>

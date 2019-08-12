@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qyt.manageArticle.mapper.AdminMapper" >
+  <resultMap id="BaseResultMap" type="qyt.manageArticle.pojo.Admin" >
+    <id column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="a_name" property="aName" jdbcType="VARCHAR" />
+    <result column="a_password" property="aPassword" jdbcType="VARCHAR" />
+    <result column="a_phone" property="aPhone" jdbcType="VARCHAR" />
+    <result column="a_checkCode" property="aCheckcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    a_id, a_name, a_password, a_phone, a_checkCode
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="qyt.manageArticle.pojo.AdminExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="qyt.manageArticle.pojo.AdminExample" >
+    delete from admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="qyt.manageArticle.pojo.Admin" >
+    insert into admin (a_id, a_name, a_password, 
+      a_phone, a_checkCode)
+    values (#{aId,jdbcType=INTEGER}, #{aName,jdbcType=VARCHAR}, #{aPassword,jdbcType=VARCHAR}, 
+      #{aPhone,jdbcType=VARCHAR}, #{aCheckcode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="qyt.manageArticle.pojo.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="aName != null" >
+        a_name,
+      </if>
+      <if test="aPassword != null" >
+        a_password,
+      </if>
+      <if test="aPhone != null" >
+        a_phone,
+      </if>
+      <if test="aCheckcode != null" >
+        a_checkCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="aName != null" >
+        #{aName,jdbcType=VARCHAR},
+      </if>
+      <if test="aPassword != null" >
+        #{aPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="aPhone != null" >
+        #{aPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="aCheckcode != null" >
+        #{aCheckcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="qyt.manageArticle.pojo.AdminExample" resultType="java.lang.Integer" >
+    select count(*) from admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin
+    <set >
+      <if test="record.aId != null" >
+        a_id = #{record.aId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aName != null" >
+        a_name = #{record.aName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aPassword != null" >
+        a_password = #{record.aPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aPhone != null" >
+        a_phone = #{record.aPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aCheckcode != null" >
+        a_checkCode = #{record.aCheckcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin
+    set a_id = #{record.aId,jdbcType=INTEGER},
+      a_name = #{record.aName,jdbcType=VARCHAR},
+      a_password = #{record.aPassword,jdbcType=VARCHAR},
+      a_phone = #{record.aPhone,jdbcType=VARCHAR},
+      a_checkCode = #{record.aCheckcode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="qyt.manageArticle.pojo.Admin" >
+    update admin
+    <set >
+      <if test="aName != null" >
+        a_name = #{aName,jdbcType=VARCHAR},
+      </if>
+      <if test="aPassword != null" >
+        a_password = #{aPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="aPhone != null" >
+        a_phone = #{aPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="aCheckcode != null" >
+        a_checkCode = #{aCheckcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="qyt.manageArticle.pojo.Admin" >
+    update admin
+    set a_name = #{aName,jdbcType=VARCHAR},
+      a_password = #{aPassword,jdbcType=VARCHAR},
+      a_phone = #{aPhone,jdbcType=VARCHAR},
+      a_checkCode = #{aCheckcode,jdbcType=VARCHAR}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+</mapper>
